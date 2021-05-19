@@ -1,4 +1,4 @@
-# Dryland Cropping Performance Forecasting 
+# Dryland Crop Performance Forecasting 
 
 Dryland cropping performance prediction based on temporal analysis of Landsat 8 imagery. 
 
