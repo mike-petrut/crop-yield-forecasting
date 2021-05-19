@@ -14,7 +14,7 @@ This project aims to provide a scalable and reproducible model for predicting yi
 
 The project will aim to do the following
 
-- Automate the download, mosaicking and spectral processing of Landsat 8
+- Automate the download, mosaicking and spectral processing of Landsat 8 imagery
 - Crop the imagery to the relevant grain growing regions, mask to dryland cropping land use areas, and interpolate and resample the cells to the same specifications as the gridded weather data (1ha squared)
 - Perform regression modelling between weather indicators and vegetation indices. 
 - Aggregate results up to the agricultural region and model relationship between vegetation indices and crop performance over time
