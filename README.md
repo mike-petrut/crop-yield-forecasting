@@ -1,4 +1,4 @@
-# Dryland Crop Performance Forecasting 
+# Dryland Cropping Performance Forecasting 
 
 Dryland cropping performance prediction based on temporal analysis of Landsat 8 imagery. 
 
@@ -14,7 +14,7 @@ This project aims to provide a scalable and reproducible model for predicting yi
 
 The project will aim to do the following
 
-- Automate the download, mosaicking and spectral processing of Landsat 8 imagery
+- Automate the download, mosaicking and spectral processing of Landsat 8
 - Crop the imagery to the relevant grain growing regions, mask to dryland cropping land use areas, and interpolate and resample the cells to the same specifications as the gridded weather data (1ha squared)
 - Perform regression modelling between weather indicators and vegetation indices. 
 - Aggregate results up to the agricultural region and model relationship between vegetation indices and crop performance over time
@@ -40,14 +40,24 @@ The project will aim to do the following
 ## Description of Files in this Repository
 
 **TBC**
-- weather_processing.ipynb
-- landsat_processing.ipynb 
-- regression_modelling.ipynb
-- outputs.ipynb
+1. weather_processing.ipynb 
+     * This will bulk download gridded tif tiles and import them as rioxarray files. The files are then cropped to the extent of the regional shapefiles, and the weather values are extracted and stacked into a pandas panel data frame
+2. landsat_processing.ipynb 
+     * This notebook will search the Google and AWS database for Landsat 8 imagery for the area of interest, filter to <5% cloud cover and bulk download monthly imagery for the AOI. 
+3. regression_modelling.ipynb
+    * **TBC**
+4. outputs.ipynb
+    * This workbook generates and saves down the output plots and results
+
 
 ## Running the Workflow
 
-TBC
+**TBC**
+
+- Open and run the weather-processing.ibynb notebook
+- Open and run the landsat-processing.ibynb notebook
+- Open and run the regression-modelling.ibynb notebook
+- Open and run the outputs.ibynb notebook
 
 ## Example Usage
 
