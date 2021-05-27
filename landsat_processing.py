@@ -4,7 +4,7 @@ import glob
 import rioxarray as rxr
 import xarray as xr
 import numpy as np
-from index_functions import evi2, ndvi, ndmi
+from index_functions import evi2, ndvi, ndmi, avi
 
  
 def landsat_comp(path):
@@ -31,6 +31,8 @@ def process_landsat(image, boundary, model):
         index = ndvi(image_clip_crop)
     elif model == "NDMI":
         index = ndmi(image_clip_crop)
+    elif model == "AVI":
+        index = avi(image_clip_crop)
     else : image_clip_crop
  
     #assign no data values for interpolation

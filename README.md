@@ -14,11 +14,10 @@ This project aims to provide a scalable and reproducible model for predicting yi
 
 The project will aim to do the following
 
-- Automate the download, mosaicking and spectral processing of Landsat 8
+- Automate the download, mosaicking and spectral processing of Landsat 7 & 8
 - Crop the imagery to the relevant grain growing regions, mask to dryland cropping land use areas, and interpolate and resample the cells to the same specifications as the gridded weather data (1ha squared)
-- Perform regression modelling between weather indicators and vegetation indices. 
-- Aggregate results up to the agricultural region and model relationship between vegetation indices and crop performance over time
-
+- Perform regression modelling between weather indicators and vegetation indices both spatially across the gridded imagery and across the time-series. 
+- Aggregate results up to the agricultural region and model relationship between vegetation indices and crop performance over time. Crop performance is typically measured by tonnes/hectare and total regional yield. 
 
 ## Tools and Packages Used
 
@@ -27,8 +26,11 @@ The project will aim to do the following
 - earthpy
 - rasterio
 - rioxarray
+- dvc
 
-**TBC**: Project may need to use some geo-databasing or API tools for handling large temporal satellite datasets.
+The project includes fucntions files which can be imported into the processing notebooks
+
+Project may need to use some geo-databasing or API tools for handling large temporal satellite datasets.
 
 ## Data Used
 
@@ -36,34 +38,55 @@ The project will aim to do the following
 - Longpaddock SILO weather data (gridded raster weather data to 1ha squared resolution (https://www.longpaddock.qld.gov.au/silo/gridded-data/)
 - ABARES (Australian Bureau of Agricultural and Resource Economics and Sciences) Classification and Land Use Raster (2018) (https://www.agriculture.gov.au/abares/aclump/land-use/data-download)
 
-
 ## Description of Files in this Repository
 
-**TBC**
-1. weather_processing.ipynb 
-     * This will bulk download gridded tif tiles and import them as rioxarray files. The files are then cropped to the extent of the regional shapefiles, and the weather values are extracted and stacked into a pandas panel data frame
-2. landsat_processing.ipynb 
-     * This notebook will search the Google and AWS database for Landsat 8 imagery for the area of interest, filter to <5% cloud cover and bulk download monthly imagery for the AOI. 
-3. regression_modelling.ipynb
-    * **TBC**
-4. outputs.ipynb
-    * This workbook generates and saves down the output plots and results
+1. get_silo.py (Functions)
+     * This python file sets out the nessesery fucntions for the climate analyis part of the modelling. The fucntion uses the AWS server that hosts all SILO weather data to download all monthly geotiff files within a certain range of months. At this stage only the monthly_rain has been added which aggrigates cumulative rain over the year by summing the rioxarray files that are preclipped to the AOI by the fucntion.
 
+2. index_fucntions.py (Functions)
+     * This python file includes fucntions for running different spectral models on landsat 7 and 8 imagery, because I want to look back pre-2013 the fucntions define the bands based on whether the image is Landsat 7 or 8. The main models I intend to use are EVI2, AVI, NDWI and NDVI. 
+
+3. landsat_processing.py (Functions)
+     * This functions file includes the necessary fucntions for 
+
+4. silo-data-run-test.ipynb (Processing Notebook)
+     * This short notebook demonstrates the fucntionality of get_silo.py for pulling monthly weather data and accumulating it for the time-series range. 
+
+5. silo-data-run-test.html (Output)
+     * Exported html of the above name-related jupyter notebook
+
+** More processing files to be uploaded earth June-2021 once compete and tested.
+
+## Activate environment and install requirements
+
+1. In terminal, cd to the dryland-crop performance-modelling-project file
+2. Activate the environment
+3. Pip install from the requirements.txt file
+
+$ cd dryland-crop performance-modelling-project file
+$ conda activate cropping-env
+$ pip3 install -r requirments.txt
 
 ## Running the Workflow
 
-**TBC**
+To run the model, start by running all function files then move onto running the processing files. Output files such as plots and tables will be saved down automatically as PDF or HTML. Note: this is not a final workflow, I intend to have the workflow automated with a dvc pipeline. 
 
-- Open and run the weather-processing.ibynb notebook
-- Open and run the landsat-processing.ibynb notebook
-- Open and run the regression-modelling.ibynb notebook
-- Open and run the outputs.ibynb notebook
+1. Functions
+     * get_silo.py
+     * index_functions.py
+     * landsat_processing.py
+
+2. Processing
+     * silo-data-run-test.ipynb
+     * ** More to come - work in progress
+
+3. Outputs
+    * ** More to come - work in progress
 
 ## Example Usage
 
-TBC
+An example of how the model can be run will be to select a region for analysis then run the model dvc pipeline to get the output. Because the model will source and download all temporal satelite imagery within the specified region, it will take a long-time to run and may require some cloud solution. As part of the dcv pipeline i intend to include a parameters file which includes a start and tend date for the temporal analysis then a option for the region. This will enable reproducability and scaleability of the model. 
 
 ## Future Developments
 
 - Develop a web app with flask or dash that allows user to select a region to analyse
-
