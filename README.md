@@ -48,13 +48,16 @@ Project may need to use some geo-databasing or API tools for handling large temp
 2. index_fucntions.py (Functions)
      * This python file includes fucntions for running different spectral models on landsat 7 and 8 imagery, because I want to look back pre-2013 the fucntions define the bands based on whether the image is Landsat 7 or 8. The main models I intend to use are EVI2, AVI, NDWI and NDVI. 
 
-3. landsat_processing.py (Functions)
-     * This functions file includes the necessary fucntions for 
+3. download_landsat.py (Functions)
+     * Set of fucntions for finding a list of available landsat images from the AWS server and download them to disk from a input geodataframe. 
 
-4. silo-data-run-test.ipynb (Processing Notebook)
+4. landsat_processing.py (Functions)
+     * This functions file includes the necessary fucntions for processing the raw landsat imagery to a cropped image with the spectral bands calculated (e.g NDVI, NDMI)
+
+5. silo-data-run-test.ipynb (Processing Notebook)
      * This short notebook demonstrates the fucntionality of get_silo.py for pulling monthly weather data and accumulating it for the time-series range. 
 
-5. silo-data-run-test.html (Output)
+6. silo-data-run-test.html (Output)
      * Exported html of the above name-related jupyter notebook
 
 ** More processing files to be uploaded earth June-2021 once compete and tested.
