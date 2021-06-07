@@ -1,6 +1,7 @@
+# %%
 
 import os
-import glob
+from glob import glob
 import rioxarray as rxr
 import xarray as xr
 import numpy as np
@@ -9,7 +10,7 @@ from index_functions import evi2, ndvi, ndmi, avi
  
 def landsat_comp(path):
  
-    tif_list = glob(os.path.join('landsat_imagery', path, "*_B*"))[0:6]
+    tif_list = glob(os.path.join('landsat', path, "*_B*"))[0:6]
  
     out_xr = []
     for i, tif_path in enumerate(tif_list):
@@ -18,21 +19,23 @@ def landsat_comp(path):
  
     return xr.concat(out_xr, dim = "band")
 
-def process_landsat(image, boundary, model):
+def process_landsat(image, boundary, model, satellite):
  
     #project LGA bound polygon to input image
     bound_crs = boundary.to_crs(image.rio.crs)
     #clip the input image to the LGA boundary geometry
     image_clip_crop = image.rio.clip(bound_crs.geometry)
+
+    sat = satellite
     
     if model == "EVI2":
-        index = evi2(image_clip_crop)
+        index = evi2(image_clip_crop, satelite = sat)
     elif model == "NDVI":
-        index = ndvi(image_clip_crop)
+        index = ndvi(image_clip_crop, satelite = sat)
     elif model == "NDMI":
-        index = ndmi(image_clip_crop)
+        index = ndmi(image_clip_crop, satelite = sat)
     elif model == "AVI":
-        index = avi(image_clip_crop)
+        index = avi(image_clip_crop, satelite = sat)
     else : image_clip_crop
  
     #assign no data values for interpolation
@@ -43,3 +46,6 @@ def process_landsat(image, boundary, model):
     processed = int.rio.clip(bound_crs.geometry)
     
     return processed
+
+    
+
