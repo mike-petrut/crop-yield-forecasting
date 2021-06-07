@@ -80,7 +80,9 @@ To run the model, start by running all function files then move onto running the
 
 2. Processing
      * silo-data-run-test.ipynb
-     * ** More to come - work in progress
+     * donwload_landsat.py
+     * landsat_processing.py
+
 
 3. Outputs
     * ** More to come - work in progress
