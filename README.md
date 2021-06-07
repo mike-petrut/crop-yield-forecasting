@@ -1,5 +1,7 @@
 # Dryland Cropping Performance Forecasting 
 
+[![DOI](https://zenodo.org/badge/366886513.svg)](https://zenodo.org/badge/latestdoi/366886513)
+
 Dryland cropping performance prediction based on temporal analysis of Landsat 8 imagery. 
 
 This is a repository for an experimental projection model which aims to project broadacre harvest crop performance based on limited reference data and without ground-truth sampling.
@@ -90,3 +92,5 @@ An example of how the model can be run will be to select a region for analysis t
 ## Future Developments
 
 - Develop a web app with flask or dash that allows user to select a region to analyse
+
+[![DOI](https://zenodo.org/badge/366886513.svg)](https://zenodo.org/badge/latestdoi/366886513)
