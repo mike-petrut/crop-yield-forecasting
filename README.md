@@ -121,4 +121,8 @@ Land use data for other states and territories are [available from this link](ht
 
 ## Future Developments
 
+* Source more local and regional time-series data from government and industry groups to test the model hypothesis across multiple regions incorporating soil data, elevation, and other geographic variables.
+* Experiment with random forest models to further evaluate the impact each month throughout the year has on the final harvest yield.
+* Explore more spectral band combinations using eemont that can be used as input variables.
+
 [![DOI](https://zenodo.org/badge/366886513.svg)](https://zenodo.org/badge/latestdoi/366886513)
