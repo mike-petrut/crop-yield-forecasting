@@ -60,22 +60,22 @@ The project includes a function file which includes custom functions which are i
 1. py01_helper_functions.py (Functions)
      * This file sets out all the functions required to run the model. 
 
-2. py02_model_data_setup.py (Functions)
+2. py02_model_data_setup.py 
      * This file sets up the non-cloud data needed for the model such as feature engineering of the ABARES crop report and import and formatting of the land classification geodataframe 
 
-3. py03_get_silo.py (Functions)
+3. py03_get_silo.py 
      * This file pulls the weather data from the SILO AWS server. The weather data is not sued in the primary analysis but had been included for future random forest model testing. 
 
-4. py04_earth_engine.py (Functions)
+4. py04_earth_engine.py 
      * This file
 
-5. py05_regression_modelling.py (Functions)
+5. py05_regression_modelling.py 
      * This file
 
-6. py06_random_forrest.py (Functions)
+6. py06_random_forrest.py 
      * *File is a test model* This file tests a workflow for formatting the data into a random forest panel table and runs a simple scikit regression model across all the features
 
-7. py07_mapping.py (Functions)
+7. py07_mapping.py 
      * This file is used for mapping data and printing images from the analysis
 
 ## Activate environment and install requirements
