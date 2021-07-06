@@ -1,6 +1,32 @@
-name: test-env
+name: crop-yield-forecasting
+channels:
+- conda-forge
 dependencies:
-  - python>=3.5
-  - pip
-  - pip:
-    - -r file:requirements.txt
+- pip
+
+#### General science packages
+- pandas
+- numpy
+- datetime
+- re
+- jupyter
+- dload
+
+#### Statistics 
+- scipy
+- statsmodels.api
+- sklearn
+
+#### Geospatial packages
+- ee
+- eemont
+- geopandas
+- rasterio
+- rioxarray
+- xarray
+- shapely
+
+#### Visualisation
+- matplotlib
+- folium
+- seaborn
