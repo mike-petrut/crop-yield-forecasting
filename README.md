@@ -2,20 +2,21 @@
 
 ## A general spatial approach to predicting crop yield for broadacre cropping with cloud processing of remote sensing imagery
 
-[![DOI](https://zenodo.org/badge/366886513.svg)](https://zenodo.
-org/badge/latestdoi/366886513) 
+[![DOI](https://zenodo.org/badge/366886513.svg)](https://zenodo.org/badge/latestdoi/366886513)
 
 This repository for an experimental projection model which aims to project broadacre harvest crop yield based on limited reference data and without ground-truth sampling.
 
 ## Background 
 
+Dryland winter cropping refers to the cultivation of crops such as wheat, barley, canola, lupins, and pulses which are not irrigated and are dependent on rainfall from late-Autumn through Winter. This model will test the relationship between vegetation indices and crop yield from 1989 to 2020. There has been a growing field of academic research on correlating these variables at the paddock, local and small regional level, but not allot that attempts to predict for large volumes of land cover, such as the larger regional or state level.
 
-## Project Goals
+With open-source programming and cloud computing technologies becoming more accessible, I was motivated to attempt a general remote sensing approach to the question: how well can we predict the next harvest from 6 + months out? Because of both systemic long-term climate change and increasing frequency of severe weather events (bushfires, flooding, drought), being able to predict crop yield earlier in the winter season is becoming more commercially and environmentally important.
 
+The model tests a the relationship between both EVI (Enhanced Vegetation Index) and NDVI (Normalized Difference Vegetation Index) to test for the best vegetation model fit, then tests other spectral variables, NBR (Burn Ratio) and NDSI (Snow Index) into the model to see how closely a multiple regression model predicts to current published estimates for the AOI 2021 harvest.
 
 ## Tools and Packages Used
 
-#### General science packages
+#### General data science packages
 - pandas
 - numpy
 - datetime
@@ -110,6 +111,8 @@ for f in *.py; do python "$f"; done
 
 The model will ask for an authentication key and open your default browser, prompting you to log onto your Gmail account which has an associated Google Earth Engine key. The authentication code provided in Google can then be copy-paste into Bash and the model will continue to run. 
 
+To run the blog post and generate a HTML file, run the blog_post_final_210705.ipynb from start to finish
+
 ## Example Usage
 
 An example of how to run this model will be to define a link to the geodataframe that you would like to be the area of interest. The file used in this document is all the croplands for South Australia, but this can be reproduced using another region of Australia. Note that the actual data for yield used is for South Australia, this can be changed to other states or territories by changing the test on line 15 of 'py02_model_data_setup'. If the user wants to test a geography outside Australia they will need to add their data source of historical values into the model in this same notebook. 
@@ -118,4 +121,4 @@ Land use data for other states and territories are [available from this link](ht
 
 ## Future Developments
 
-[![DOI](https://zenodo.org/badge/366886513.svg)](https://zenodo.org/badge/latetdoi/366886513)
+[![DOI](https://zenodo.org/badge/366886513.svg)](https://zenodo.org/badge/latestdoi/366886513)
