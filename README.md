@@ -1,101 +1,121 @@
-# Dryland Cropping Performance Forecasting 
+# Crop Yield Forecasting with Landsat Imagery
 
-[![DOI](https://zenodo.org/badge/366886513.svg)](https://zenodo.org/badge/latestdoi/366886513)
+## A general spatial approach to predicting crop yield for broadacre cropping with cloud processing of remote sensing imagery
 
-Dryland cropping performance prediction based on temporal analysis of Landsat 8 imagery. 
+[![DOI](https://zenodo.org/badge/366886513.svg)](https://zenodo.
+org/badge/latestdoi/366886513) 
 
-This is a repository for an experimental projection model which aims to project broadacre harvest crop performance based on limited reference data and without ground-truth sampling.
+This repository for an experimental projection model which aims to project broadacre harvest crop yield based on limited reference data and without ground-truth sampling.
 
 ## Background 
 
-Projecting the performance of dryland broadacre cropping in Australia has long been a challenge for earth observation professions in Australia including the Commonwealth Scientific and Industrial Research Organisation (CSIRO). Research to date in this field has focused on drawing predictive results using machine learning techniques across smaller localised samples of data, modelling results against ground truth sample points at the farm and paddock level. With growing concern about the impacts of climate change on the overall Australian agriculture industry, I see the opportunity for a broader approach to crop performance modelling, using gridded weather indicators and vegetation index modelling from Landsat 8 imagery to estimate indicators of crop performance across larger regions were ground truth control samples are not available at scale. 
 
 ## Project Goals
 
-This project aims to provide a scalable and reproducible model for predicting yield across cereals and canola in Australia. The project will utilise temporal satellite and weather data to model the relationship between climate and different vegetation and moisture indices such as NDMI, EVI, and NDVI.
-
-The project will aim to do the following
-
-- Automate the download, mosaicking and spectral processing of Landsat 7 & 8
-- Crop the imagery to the relevant grain growing regions, mask to dryland cropping land use areas, and interpolate and resample the cells to the same specifications as the gridded weather data (1ha squared)
-- Perform regression modelling between weather indicators and vegetation indices both spatially across the gridded imagery and across the time-series. 
-- Aggregate results up to the agricultural region and model relationship between vegetation indices and crop performance over time. Crop performance is typically measured by tonnes/hectare and total regional yield. 
 
 ## Tools and Packages Used
 
+#### General science packages
+- pandas
+- numpy
+- datetime
+- re
+- jupyter
+- dload
+
+#### Statistics 
+- scipy
+- statsmodels.api
+- sklearn
+
+#### Geospatial packages
 - geopandas
-- matplotlib
-- earthpy
 - rasterio
 - rioxarray
-- dvc
+- xarray
+- shapely
 
-The project includes fucntions files which can be imported into the processing notebooks
+#### Visualisation
+- matplotlib
+- folium
+- seaborn
 
-Project may need to use some geo-databasing or API tools for handling large temporal satellite datasets.
+### Google Earth Engine Packages 
+- ee
+- eemont
+
+The project includes a function file which includes custom functions which are imported into the working calculation sheets
 
 ## Data Used
 
-- Landsat 8 imagery sourced through the AWS and Google portals 
-- Longpaddock SILO weather data (gridded raster weather data to 1ha squared resolution (https://www.longpaddock.qld.gov.au/silo/gridded-data/)
-- ABARES (Australian Bureau of Agricultural and Resource Economics and Sciences) Classification and Land Use Raster (2018) (https://www.agriculture.gov.au/abares/aclump/land-use/data-download)
+- Landsat 5 imagery sourced through the Google Earth Engine 
+- Landsat 7 imagery sourced through the Google Earth Engine  
+- Longpaddock SILO weather data (gridded raster weather data to 1ha squared resolution - [Link](https://www.longpaddock.qld.gov.au/silo/gridded-data/)
+- ABARES (Australian Bureau of Agricultural and Resource Economics and Sciences) Classification and Land Use Raster (2018) - [Link](https://www.agriculture.gov.au/abares/aclump/land-use/data-download)
+- ABARES Australian Crop Report - [Link](https://www.agriculture.gov.au/abares/research-topics/agricultural-outlook/australian-crop-report)
 
 ## Description of Files in this Repository
 
-1. get_silo.py (Functions)
-     * This python file sets out the nessesery fucntions for the climate analyis part of the modelling. The fucntion uses the AWS server that hosts all SILO weather data to download all monthly geotiff files within a certain range of months. At this stage only the monthly_rain has been added which aggrigates cumulative rain over the year by summing the rioxarray files that are preclipped to the AOI by the fucntion.
+1. py01_helper_functions.py (Functions)
+     * This file sets out all the functions required to run the model. 
 
-2. index_fucntions.py (Functions)
-     * This python file includes fucntions for running different spectral models on landsat 7 and 8 imagery, because I want to look back pre-2013 the fucntions define the bands based on whether the image is Landsat 7 or 8. The main models I intend to use are EVI2, AVI, NDWI and NDVI. 
+2. py02_model_data_setup.py (Functions)
+     * This file sets up the non-cloud data needed for the model such as feature engineering of the ABARES crop report and import and formatting of the land classification geodataframe 
 
-3. download_landsat.py (Functions)
-     * Set of fucntions for finding a list of available landsat images from the AWS server and download them to disk from a input geodataframe. 
+3. py03_get_silo.py (Functions)
+     * This file pulls the weather data from the SILO AWS server. The weather data is not sued in the primary analysis but had been included for future random forest model testing. 
 
-4. landsat_processing.py (Functions)
-     * This functions file includes the necessary fucntions for processing the raw landsat imagery to a cropped image with the spectral bands calculated (e.g NDVI, NDMI)
+4. py04_earth_engine.py (Functions)
+     * This file
 
-5. silo-data-run-test.ipynb (Processing Notebook)
-     * This short notebook demonstrates the fucntionality of get_silo.py for pulling monthly weather data and accumulating it for the time-series range. 
+5. py05_regression_modelling.py (Functions)
+     * This file
 
-6. silo-data-run-test.html (Output)
-     * Exported html of the above name-related jupyter notebook
+6. py06_random_forrest.py (Functions)
+     * *File is a test model* This file tests a workflow for formatting the data into a random forest panel table and runs a simple scikit regression model across all the features
 
-** More processing files to be uploaded earth June-2021 once compete and tested.
+7. py07_mapping.py (Functions)
+     * This file is used for mapping data and printing images from the analysis
 
 ## Activate environment and install requirements
 
-1. In terminal, cd to the dryland-crop performance-modelling-project file
-2. Activate the environment
-3. Pip install from the requirements.txt file
+To set up the environment for this model, with Git and Miniconda/Anaconda installed, run the following in the command terminal (this model is tested using Bash)
 
-$ cd dryland-crop performance-modelling-project file
-$ conda activate cropping-env
-$ pip3 install -r requirments.txt
+```bash
+
+git clone https://github.com/mike-petrut/crop-yield-forecaasting
+cd crop-yield-forecasting
+conda env create --file environment.yml
+conda activate crop-yield-forecasting
+
+```
+
+Then install the required packages into the environment using
+
+```bash 
+
+pip install -r requirements.txt
+
+```
 
 ## Running the Workflow
 
-To run the model, start by running all function files then move onto running the processing files. Output files such as plots and tables will be saved down automatically as PDF or HTML. Note: this is not a final workflow, I intend to have the workflow automated with a dvc pipeline. 
+Once the model is set up, the python files can be run in order using the following code in Bash
 
-1. Functions
-     * get_silo.py
-     * index_functions.py
-     * landsat_processing.py
+```bash
 
-2. Processing
-     * silo-data-run-test.ipynb
-     * donwload_landsat.py
-     * landsat_processing.py
+for f in *.py; do python "$f"; done
 
+```
 
-3. Outputs
-    * ** More to come - work in progress
+The model will ask for an authentication key and open your default browser, prompting you to log onto your Gmail account which has an associated Google Earth Engine key. The authentication code provided in Google can then be copy-paste into Bash and the model will continue to run. 
 
 ## Example Usage
 
-An example of how the model can be run will be to select a region for analysis then run the model dvc pipeline to get the output. Because the model will source and download all temporal satelite imagery within the specified region, it will take a long-time to run and may require some cloud solution. As part of the dcv pipeline i intend to include a parameters file which includes a start and tend date for the temporal analysis then a option for the region. This will enable reproducability and scaleability of the model. 
+An example of how to run this model will be to define a link to the geodataframe that you would like to be the area of interest. The file used in this document is all the croplands for South Australia, but this can be reproduced using another region of Australia. Note that the actual data for yield used is for South Australia, this can be changed to other states or territories by changing the test on line 15 of 'py02_model_data_setup'. If the user wants to test a geography outside Australia they will need to add their data source of historical values into the model in this same notebook. 
+
+Land use data for other states and territories are [available from this link](https://www.agriculture.gov.au/abares/aclump/land-use/data-download). To run the model as is, set up for South Australia, simply run the py00_run_full_model.py file in the repository. ​
 
 ## Future Developments
 
-- Develop a web app with flask or dash that allows user to select a region to analyse
-
-[![DOI](https://zenodo.org/badge/366886513.svg)](https://zenodo.org/badge/latestdoi/366886513)
+[![DOI](https://zenodo.org/badge/366886513.svg)](https://zenodo.org/badge/latetdoi/366886513)
