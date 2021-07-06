@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from scipy import stats
 import statsmodels.api as sm
 
-from py01_helper_fucntions import ee_collection_pull, monthly_rain, process_gdf, process_index_table, process_index_table2
+from py01_helper_functions import ee_collection_pull, monthly_rain, process_gdf, process_index_table, process_index_table2, process_index_table3
 
 #%%
 
@@ -22,6 +22,12 @@ sa_evi = process_index_table('sa_all_polygons_evi.csv')
 sa_ndvi = process_index_table('sa_all_polygons_ndvi.csv')
 sa_ndsi = process_index_table('sa_all_polygons_ndsi.csv')
 sa_nbr = process_index_table('sa_all_polygons_nbrt.csv')
+
+#March - May values for multiple regression prediction
+sa_evi_mlt = process_index_table3('sa_all_polygons_evi.csv')
+sa_ndsi_mlt = process_index_table3('sa_all_polygons_ndsi.csv')
+sa_nbr_mlt = process_index_table3('sa_all_polygons_nbrt.csv')
+
 sa_yield = pd.read_csv('sa_yield.csv', index_col = 'year')
 sa_rain = pd.read_csv('sa_crop_rain.csv', index_col = 'year')
 
@@ -32,7 +38,10 @@ sa_regression_table = pd.concat([sa_evi, sa_ndvi, sa_ndsi,
 
 sa_regression_table = sa_regression_table[sa_regression_table.index != 2021]
 
-sa_regression_pred = pd.concat([sa_evi, sa_ndsi, sa_nbr], axis = 1)
+sa_mlt_regression_table = pd.concat([sa_evi_mlt, sa_ndsi_mlt, 
+                                     sa_nbr_mlt, sa_yield, sa_rain], axis = 1).dropna()
+
+sa_regression_pred = pd.concat([sa_evi_mlt, sa_ndsi_mlt, sa_nbr_mlt], axis = 1)
 
 sa_regression_pred = sa_regression_pred[sa_regression_pred.index == 2021].to_numpy()
 
@@ -76,7 +85,7 @@ ax2.set_ylabel('Cereals Crop Yield (tonnes / ha)', fontsize=20)
 for label in (ax2.get_xticklabels() + ax2.get_yticklabels()):
 	label.set_fontsize(18)
 
-plt.savefig('plot03_evi_vs_ndvi.jpg')
+plt.savefig('plot04_evi_vs_ndvi.jpg')
 
 # %%
 
@@ -113,8 +122,10 @@ print("p-value:", p_value)
 
 from sklearn.linear_model import LinearRegression
 
-yield_np = sa_regression_table['Yield'].to_numpy()
-exog_np = sa_regression_table[['EVI', 'NDSI', 'NBRT']].to_numpy()
+yield_np = sa_mlt_regression_table['Yield'].to_numpy()
+exog_np = sa_mlt_regression_table[['EVI', 'NDSI', 'NBRT']].to_numpy()
+
+#%%
 
 model = LinearRegression().fit(exog_np, yield_np)
 
@@ -125,7 +136,5 @@ print('slope:', model.coef_)
 
 y_pred = model.predict(sa_regression_pred)
 y_pred
-
-# %%
 
 # %%

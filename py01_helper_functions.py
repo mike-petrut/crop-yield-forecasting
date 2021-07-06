@@ -292,7 +292,7 @@ def process_index_table(vi_link):
     vi_tbl['year'] = vi_tbl.month.astype(str).str[0:4]
     vi_tbl['month'] = vi_tbl.month.astype(str).str[5:7]
 
-    vi_preharv = vi_tbl[vi_tbl['month'].isin(['03','04', '05'])]
+    vi_preharv = vi_tbl[vi_tbl['month'].isin(['08','09', '10'])]
 
     vi_final = vi_preharv.groupby('year').mean()
 
@@ -309,6 +309,21 @@ def process_index_table2(vi_link):
     vi_tbl['month'] = vi_tbl.month.astype(str).str[5:7]
 
     vi_preharv = vi_tbl[vi_tbl['month'].isin(['05', '06', '07', '08', '09', '10'])]
+
+    vi_final = vi_preharv.groupby('year').mean()
+
+    vi_final.index = vi_final.index.astype(int)
+
+    return vi_final
+
+def process_index_table3(vi_link):
+
+    vi_tbl = pd.read_csv(vi_link)
+
+    vi_tbl['year'] = vi_tbl.month.astype(str).str[0:4]
+    vi_tbl['month'] = vi_tbl.month.astype(str).str[5:7]
+
+    vi_preharv = vi_tbl[vi_tbl['month'].isin(['03','04', '05'])]
 
     vi_final = vi_preharv.groupby('year').mean()
 
@@ -338,3 +353,7 @@ def process_index_pivot(vi_link, v_index):
 
     return vi_tbl
 
+
+
+
+# %%

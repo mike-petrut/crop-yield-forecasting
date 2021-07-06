@@ -11,29 +11,19 @@ import numpy as np
 from pandas.core import frame
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import dload
 
-from py01_helper_fucntions import ee_collection_pull, process_gdf
+from py01_helper_functions import ee_collection_pull, process_gdf
 
 # %%
 
 ee.Authenticate()
 ee.Initialize()
 
+
 # %% 
 
-try:
-    sa_cereals_class = gpd.read_file('sa_cereals/sa_cereals_class.shp')
-except:    
-    sa_land_class = gpd.read_file('sa-shape/sa-shape.shp')
-
-    sa_cereals_class = sa_land_class[\
-        (sa_land_class['LU_CODE'] == '3.3.1') & \
-            (sa_land_class['LUC_DATE'].str.contains('2016'))]\
-                .explode()\
-                .reset_index()
-
-    sa_cereals_class.to_file('sa-cereals/sa_cereals_class.shp')
-
+sa_cereals_class = gpd.read_file('sa-cereals/sa_cereals_class.shp')
 
 #%% DEFINE COLLECTION 
 

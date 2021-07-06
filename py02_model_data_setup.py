@@ -5,8 +5,10 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import dload
+import geopandas as gpd 
 
-from py01_helper_fucntions import get_abares_crop_data
+from py01_helper_functions import get_abares_crop_data
 
 # %%
 
@@ -168,6 +170,22 @@ ax.set_title("South Australia Annual Average Yield by Crop Type, 1989 - 2020", f
 
 plt.savefig('plot02_sa_historical_2.jpg')
 
-
-
 # %%
+
+try:
+    sa_cereals_class = gpd.read_file('sa-cereals/sa_cereals_class.shp')
+except: 
+
+    dload.save_unzip("http://www.waterconnect.sa.gov.au/Content/Downloads/DEWNR/LANDSCAPE_LandUse_ALUM_shp.zip")   
+    
+    sa_land_class = gpd.read_file('LANDSCAPE_LandUse_ALUM_shp/LANDSCAPE_LandUse_ALUM_GDA94.shp')
+
+    sa_cereals_class = sa_land_class[\
+        (sa_land_class['LU_CODE'] == '3.3.1') & \
+            (sa_land_class['LUC_DATE'].str.contains('2016'))]\
+                .explode()\
+                .reset_index()
+
+    sa_cereals_class.to_file('sa-cereals/sa_cereals_class.shp')
+
+    sa_cereals_class = gpd.read_file('sa-cereals/sa_cereals_class.shp')
